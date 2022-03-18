@@ -1,0 +1,16 @@
+package compresorHuffman;
+
+public class Nodo {
+	public int valor;
+	public char caracter;
+	public Nodo izquierda;
+	public Nodo derecha;
+	//public boolean esCaracter; //Si es carácter, es hoja, comprobar ambos hijos
+	
+	public Nodo(int v, char c, Nodo l, Nodo r) {
+		valor = v;
+		caracter = c;
+		izquierda = l;
+		derecha = r;
+	}
+}
