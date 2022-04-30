@@ -14,6 +14,46 @@ public class Main {
 		return lista.poll();
 	}
 	
+	private static int convertirBitsAEntero(String bits) {
+		int valor = 0;
+		boolean negativo = false;
+		for(int i = 0; i < 8; i++) {
+			char val = bits.charAt(i);
+			if(!negativo) {
+				if (val=='1') {
+					if (i == 0) {
+						negativo = true;
+						
+					} else {
+						valor += Math.pow(2,(7-i));
+					}
+				}
+			} else {
+				if (val=='0') {
+					valor += Math.pow(2,(7-i));
+				}
+			}
+		}
+		if(negativo) {
+			valor = -(valor+1);
+		}
+		return valor;
+	}
+	
+	private static String convertirEnteroABits(int entero) { //Debe pasar un valor no negativo (usar toUnsignedInt)
+		String valor = "";
+		String auxiliar = "";
+		int check = entero;
+		for(int i = 7; i >= 0; i--) { //Los 8 bits
+			auxiliar += String.valueOf(check%2);
+			check/=2;
+		}
+		for(int i = 7; i >= 0; i--) {
+			valor += auxiliar.charAt(i);
+		}
+		return valor;
+	}
+	
 	public static void main(String args[]) {
 		if (args.length!=2) {
 			System.out.println("Estructura de llamada: huf <operacion> <fichero>");
@@ -29,7 +69,7 @@ public class Main {
 				}
 				*/
 				Nodo raiz = Huffman(lista);
-				System.out.println("Hecho el código");
+				System.out.println("Hecho el cï¿½digo");
 			}
 		}
 	}
