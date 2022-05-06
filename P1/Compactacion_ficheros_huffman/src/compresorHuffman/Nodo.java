@@ -5,7 +5,7 @@ public class Nodo {
 	public char caracter;
 	public Nodo izquierda;
 	public Nodo derecha;
-	//public boolean esCaracter; //Si es carácter, es hoja, comprobar ambos hijos
+	//public boolean esCaracter; //Si es carï¿½cter, es hoja, comprobar ambos hijos
 	
 	public Nodo(int v, char c, Nodo l, Nodo r) {
 		valor = v;
@@ -13,4 +13,9 @@ public class Nodo {
 		izquierda = l;
 		derecha = r;
 	}
+	
+	public boolean esHoja() {	
+		return izquierda == null && derecha == null;
+	}
+	
 }

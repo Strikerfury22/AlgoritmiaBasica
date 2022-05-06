@@ -3,6 +3,8 @@ package compresorHuffman;
 import java.util.Iterator;
 import java.util.PriorityQueue;
 
+import pruebas.Pruebas;
+
 public class Main {
 	private static Nodo Huffman(PriorityQueue<Nodo> lista) {
 		while(lista.size()>1) {
@@ -55,8 +57,16 @@ public class Main {
 	}
 	
 	public static void main(String args[]) {
-		if (args.length!=2) {
+		if (args.length<2) {
 			System.out.println("Estructura de llamada: huf <operacion> <fichero>");
+		} else if(args.length>2){
+			//Extraer_Frecuencias e = new Extraer_Frecuencias(args[1]);
+			//PriorityQueue<Nodo> lista = e.sacarFrecuencias();
+			
+			//Nodo raiz = Main.Huffman(lista);
+			//Pruebas.prueba2(raiz);
+			Pruebas.prueba3();
+			
 		} else {
 			if (args[0].equals("-c")) {
 				Extraer_Frecuencias e = new Extraer_Frecuencias(args[1]);
