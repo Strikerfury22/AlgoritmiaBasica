@@ -16,11 +16,14 @@ public class ToFile {
 			auxiliar = auxiliar.substring(aBorrar.value); //Actualizamos el String en local
 			Nodo dcha = extraerNodos(auxiliar, aBorrar);
 			n = new Nodo(1,'_',izq,dcha);
-			carABorrar.value = aBorrar.value+2; //Le decimos al padre que borre lo que han borrado nuestros hijos, más los caracteres "N(".
+			carABorrar.value = aBorrar.value+3; //Le decimos al padre que borre lo que han borrado nuestros hijos, más los caracteres de apertura "N(" y de cierre ")".
 		} else if (arbol.charAt(0)=='H') {
 			n = new Nodo(0,arbol.charAt(1),null,null);
-			//¿Borrar solo si el separador es coma?
-			carABorrar.value=3; //Borrar H, carácter y separador (coma o paréntesis).
+			if (arbol.charAt(2)==',') {
+				carABorrar.value=3; //Borrar H, carácter y separador coma.
+			} else {
+				carABorrar.value=2; //Borrar H y carácter.
+			}
 		}//Si no, es E, que es nodo nulo.
 		return n;
 	}
