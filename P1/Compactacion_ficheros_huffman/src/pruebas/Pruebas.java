@@ -1,7 +1,9 @@
 package pruebas;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.util.PriorityQueue;
 import java.util.Scanner;
 
@@ -24,32 +26,34 @@ public class Pruebas {
             e.printStackTrace();
         }
 	}
-	public static void prueba2(Nodo raiz) {
+	public static void prueba2(Nodo raiz, int numCaracteres) {
 		
 		
 		File file = new File("output.txt");
 		String s = "";
-		s = ToFile.anyadirNodos(s,raiz) + "\n";
+		s = ToFile.anyadirNodos(s,raiz);
 		try {
             FileOutputStream fout
                     = new FileOutputStream(file);
             byte b[] = s.getBytes();
             fout.write(b);
+            fout.write((String.valueOf(numCaracteres)+"\n").getBytes());
         }catch (Exception e){
             e.printStackTrace();
         }
 	}
 	
 	public static void prueba3() {
-		File file = new File("output.txt");
 		try {
-			Scanner scanner = new Scanner(file);
-			String arbol = scanner.nextLine();
-			Nodo raiz = ToFile.extraerNodos(arbol, new MyInt(0));
+			FileReader file = new FileReader("output.txt");
+			BufferedReader br = new BufferedReader(file);
+			Nodo raiz = ToFile.extraerNodos(br, new MyInt(0));
 			String s = "";
-			s = ToFile.anyadirNodos(s,raiz) + "\n";
+			s = ToFile.anyadirNodos(s,raiz);
+			String number = br.readLine();
 			System.out.println(s);
-			scanner.close();
+			System.out.println(number);
+			br.close();
 		} catch (Exception e) {
 			System.out.println("Archivo no encontrado");
 		}

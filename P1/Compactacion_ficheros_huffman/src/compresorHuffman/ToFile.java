@@ -1,5 +1,6 @@
 package compresorHuffman;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.Scanner;
@@ -7,43 +8,62 @@ import java.util.Scanner;
 public class ToFile {
 
 
-	public static Nodo extraerNodos(String arbol, MyInt carABorrar) {
-		Nodo n = null;
-		if(arbol.charAt(0)=='N') {
-			String auxiliar = arbol.substring(2); //Actualizamos el String en local
-			MyInt aBorrar = new MyInt(0);
-			Nodo izq = extraerNodos(auxiliar, aBorrar);
-			auxiliar = auxiliar.substring(aBorrar.value); //Actualizamos el String en local
-			Nodo dcha = extraerNodos(auxiliar, aBorrar);
-			n = new Nodo(1,'_',izq,dcha);
-			carABorrar.value = aBorrar.value+3; //Le decimos al padre que borre lo que han borrado nuestros hijos, más los caracteres de apertura "N(" y de cierre ")".
-		} else if (arbol.charAt(0)=='H') {
-			n = new Nodo(0,arbol.charAt(1),null,null);
-			if (arbol.charAt(2)==',') {
-				carABorrar.value=3; //Borrar H, carácter y separador coma.
-			} else {
-				carABorrar.value=2; //Borrar H y carácter.
+	public static Nodo extraerNodos(BufferedReader br, MyInt seComeSeparador) {
+		try {
+			int valor = br.read();
+			boolean done = false;
+			Nodo n = null;
+			if(valor!=1) {
+				char c = (char)valor;
+				if(c=='N') { 											//Puede ser un nodo no hoja
+					valor = br.read();
+					if(valor!=1) {
+						char d = (char)valor;
+						if(d=='(') { 													//Es inicio de nodo no hoja
+							MyInt seHaComidoSeparador = new MyInt(0);
+							Nodo izq = extraerNodos(br,seComeSeparador);
+							if(seHaComidoSeparador.value==0) {
+								br.read(); //Se come la coma
+							} else {
+								seHaComidoSeparador.value=0; //Reinicia el indicador
+							}
+							Nodo dcha = extraerNodos(br,seComeSeparador);
+							if(seHaComidoSeparador.value==0) {
+								br.read(); //Se come el cierre del paréntesis
+							} //No se reinicia el indicador porque ya no se usa
+							n = new Nodo(1,'_',izq,dcha);
+						} else { 														//Era una hoja. d es ',' o ')'
+							n = new Nodo(0,c,null,null);
+							seComeSeparador.value=1; //Indica al padre que se ha comido el separador
+						}
+					}
+				} else { 												//Es nodo hoja.
+					n = new Nodo(0,c,null,null);
+				}
+				return n;
+			} else { // No hay nada que leer, error.
+				return null;
 			}
-		}//Si no, es E, que es nodo nulo.
-		return n;
+		}catch(Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 	
 	public static String anyadirNodos(String s, Nodo nodo) {
 		String arbol = s;
 		if(nodo.esHoja()) {
-			arbol += "H"+nodo.caracter;
+			arbol += nodo.caracter;
 		} else {
 			arbol += "N(";
 			if(nodo.izquierda!=null) {
-				arbol = anyadirNodos(arbol,nodo.izquierda)+",";
-			} else {
-				arbol += "E,";
-			}
+				arbol = anyadirNodos(arbol,nodo.izquierda);
+			} 
+			arbol += ",";
 			if(nodo.derecha!=null) {
-				arbol = anyadirNodos(arbol,nodo.derecha)+")";
-			} else {
-				arbol += "E)";
+				arbol = anyadirNodos(arbol,nodo.derecha);
 			}
+			arbol += ")";
 		}
 		return arbol;
 	}

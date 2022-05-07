@@ -26,13 +26,17 @@ public class Main {
 		if (args.length<2) {
 			System.out.println("Estructura de llamada: huf <operacion> <fichero>");
 		} else if(args.length>2){
-			///Extraer_Frecuencias e = new Extraer_Frecuencias(new FileReader(args[1]));
-			//PriorityQueue<Nodo> lista = e.sacarFrecuencias();
-			
-			//Nodo raiz = Main.Huffman(lista);
-			//Pruebas.prueba2(raiz);
-			Pruebas.prueba3();
-			
+			try {
+				Extraer_Frecuencias e = new Extraer_Frecuencias(new FileReader(args[1]));
+				MyInt numCaracteres = new MyInt(0);
+				PriorityQueue<Nodo> lista = e.sacarFrecuencias(numCaracteres);
+				
+				Nodo raiz = Main.Huffman(lista);
+				Pruebas.prueba2(raiz,numCaracteres.value);
+				Pruebas.prueba3();
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
 		} else {
 			if (args[0].equals("-c")) {
 				try {
@@ -121,7 +125,7 @@ public class Main {
 					
 					//Extraemos el árbol del fichero
 					String arbol = scanner.nextLine();
-					Nodo raiz = ToFile.extraerNodos(arbol, new MyInt(0));
+					//Nodo raiz = ToFile.extraerNodos(arbol, new MyInt(0));
 					
 					//Decodificamos el resto del fichero
 					
