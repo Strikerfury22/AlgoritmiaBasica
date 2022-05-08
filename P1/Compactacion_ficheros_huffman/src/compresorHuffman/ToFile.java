@@ -73,7 +73,7 @@ public class ToFile {
 			if (raiz.esHoja()) {
 			return postOrderTraversal(raiz.izquierda) +
 			postOrderTraversal(raiz.derecha) +
-			"1" + "-" + raiz.caracter;
+			"1"+raiz.caracter;
 				//System.out.print("1" + "-" + raiz.caracter);
 			} else {
 				return postOrderTraversal(raiz.izquierda) +

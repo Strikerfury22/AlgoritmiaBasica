@@ -28,11 +28,10 @@ public class Main {
 		} else if(args.length>2){
 			try {
 				Extraer_Frecuencias e = new Extraer_Frecuencias(new FileReader(args[1]));
-				MyInt numCaracteres = new MyInt(0);
-				PriorityQueue<Nodo> lista = e.sacarFrecuencias(numCaracteres);
-				
+				PriorityQueue<Nodo> lista = e.sacarFrecuencias();
+				int numCaracteres = e.numChars;
 				Nodo raiz = Main.Huffman(lista);
-				Pruebas.prueba2(raiz,numCaracteres.value);
+				Pruebas.prueba2(raiz,numCaracteres);
 				Pruebas.prueba3();
 			}catch(Exception e) {
 				e.printStackTrace();
@@ -45,8 +44,9 @@ public class Main {
 					
 					//Extraemos las frecuencias de los caracteres. //Ahora codificamos también el \n, ¿en lugar de codificarlo, ponerlo directamente?
 					Extraer_Frecuencias e = new Extraer_Frecuencias(readerContar);
-					MyInt numCaracteres = new MyInt(0);
-					PriorityQueue<Nodo> lista = e.sacarFrecuencias(numCaracteres);
+					PriorityQueue<Nodo> lista = e.sacarFrecuencias();
+					int numCaracteres = e.numChars;
+
 					
 					//Creamos el árbol Huffman
 					Nodo raiz = Huffman(lista);
@@ -78,7 +78,7 @@ public class Main {
 		            //Introducimos el árbol y el número de caracteres
 		            byte b[] = arbol.getBytes();
 		            fout.write(b);
-		            String nc = String.valueOf(numCaracteres.value)+"\n";
+		            String nc = String.valueOf(numCaracteres)+"\n";
 		            fout.write(nc.getBytes());
 		            
 		            //Empezamos a codificar el fichero (recorrer árbol y generar código binario en base al valor encontrado).

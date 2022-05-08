@@ -11,18 +11,20 @@ import java.util.Set;
 
 public class Extraer_Frecuencias {
 	private FileReader fichero;
+	public int numChars;
 	
 	public Extraer_Frecuencias(FileReader _fichero) {
 		fichero = _fichero;
 	}
 	
-	public PriorityQueue<Nodo> sacarFrecuencias(MyInt numCaracteres) {
+	public PriorityQueue<Nodo> sacarFrecuencias() {
+		numChars = 0;
 		Map<Character,Integer> d = new HashMap<Character,Integer>();
 		try {
 			BufferedReader br = new BufferedReader(fichero);
 			int valor = br.read();
 			while(valor!=-1) {
-				numCaracteres.value++;
+				numChars++;
 				char c = (char)valor;
 			    if (d.containsKey(c)) {
 			    	d.put(c,d.get(c)+1);
@@ -43,4 +45,5 @@ public class Extraer_Frecuencias {
 		}
 		return lista;
 	}
+
 }
