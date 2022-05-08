@@ -11,7 +11,6 @@ public class ToFile {
 	public static Nodo extraerNodos(BufferedReader br, MyInt seComeSeparador) {
 		try {
 			int valor = br.read();
-			boolean done = false;
 			Nodo n = null;
 			if(valor!=1) {
 				char c = (char)valor;
@@ -21,13 +20,13 @@ public class ToFile {
 						char d = (char)valor;
 						if(d=='(') { 													//Es inicio de nodo no hoja
 							MyInt seHaComidoSeparador = new MyInt(0);
-							Nodo izq = extraerNodos(br,seComeSeparador);
+							Nodo izq = extraerNodos(br,seHaComidoSeparador);
 							if(seHaComidoSeparador.value==0) {
 								br.read(); //Se come la coma
 							} else {
 								seHaComidoSeparador.value=0; //Reinicia el indicador
 							}
-							Nodo dcha = extraerNodos(br,seComeSeparador);
+							Nodo dcha = extraerNodos(br,seHaComidoSeparador);
 							if(seHaComidoSeparador.value==0) {
 								br.read(); //Se come el cierre del paréntesis
 							} //No se reinicia el indicador porque ya no se usa

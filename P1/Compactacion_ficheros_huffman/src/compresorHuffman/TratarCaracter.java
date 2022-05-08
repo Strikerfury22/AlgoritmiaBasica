@@ -29,16 +29,16 @@ public class TratarCaracter {
 		return valor;
 	}
 	
-	//Pasando un entero que es el resultado de un unsigned Byte, devuelve el array de Strings
+	//Pasando el valor entero positivo de un carácter, devuelve el array de Strings con los bits que lo codifican
 	public static String convertirEnteroABits(int entero) { //Debe pasar un valor no negativo (usar toUnsignedInt)
 		String valor = "";
 		String auxiliar = "";
 		int check = entero;
-		for(int i = 7; i >= 0; i--) { //Los 8 bits
+		for(int i = 15; i >= 0; i--) { //Los 8 bits
 			auxiliar += String.valueOf(check%2);
 			check/=2;
 		}
-		for(int i = 7; i >= 0; i--) {
+		for(int i = 15; i >= 0; i--) {
 			valor += auxiliar.charAt(i);
 		}
 		return valor;

@@ -124,20 +124,54 @@ public class Main {
 			} else if (args[0].equals("-d")) {
 				try {
 					//Abrimos el fichero de entrada
-					File fichero = new File(args[1]);
-					Scanner scanner = new Scanner(fichero);
+					FileReader readerDecodificar = new FileReader(args[1]);
+					BufferedReader br = new BufferedReader(readerDecodificar);
+					
 					
 					//Abrimos fichero de salida
 					File ficheroSalida = new File(args[1]+"_decodificado.txt");
 					FileOutputStream fout = new FileOutputStream(ficheroSalida);
 					
 					//Extraemos el árbol del fichero
-					String arbol = scanner.nextLine();
-					//Nodo raiz = ToFile.extraerNodos(arbol, new MyInt(0));
+					Nodo raiz = ToFile.extraerNodos(br, new MyInt(0));
+					String number = br.readLine();
+					int totalCaracteres = Integer.valueOf(number);
 					
 					//Decodificamos el resto del fichero
-					
-					
+					int valor = br.read();
+		            int numDecodificados = 0;
+		            Nodo iterador = raiz;
+		            
+		            //Buffer en el que se acumulan 1s y 0s hasta tener 8.
+		            while(valor!=-1) {
+		            	String bits = TratarCaracter.convertirEnteroABits(valor);
+		            	for(int i = 0; i < bits.length(); i++) { //De 0 a 15 //00000110
+					    	if(numDecodificados == totalCaracteres) {
+					    		break;
+					    	}
+					    	if(raiz.esHoja()) { //Esto debería saltar solo si la raíz es hoja
+					    		numDecodificados++;
+					            fout.write(String.valueOf(raiz.caracter).getBytes());
+					            
+					    		//Reiniciamos el árbol para buscar
+					    		iterador = raiz;
+					    	} else {
+						    	if(bits.charAt(i)=='1') {
+						    		iterador = iterador.derecha;
+						    	} else { //0
+						    		iterador = iterador.izquierda;
+						    	}
+						    	if(iterador.esHoja()) {
+						    		numDecodificados++;
+						    		fout.write(String.valueOf(iterador.caracter).getBytes());
+						            
+						    		//Reiniciamos el árbol para buscar
+						    		iterador = raiz;
+						    	}
+					    	}
+					    }
+					    valor = br.read();
+					}
 				} catch (Exception e){
 		            e.printStackTrace();
 		        }

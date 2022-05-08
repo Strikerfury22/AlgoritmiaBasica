@@ -1,0 +1,12 @@
+//Almacenamos el resto del fichero en un ArrayList
+					ArrayList<Integer> lista = new ArrayList<Integer>();
+					int valor = br.read();
+					while(valor!=-1) {
+			            lista.add(valor);
+					}
+					int numDecodificados = 0;
+		            Nodo recorrer = raiz;
+		            
+		            //Buffer en el que se acumulan 1s y 0s hasta tener 8.
+		            for(Integer v : lista) {
+		            	String bits = TratarCaracter.convertirEnteroABits(v);
