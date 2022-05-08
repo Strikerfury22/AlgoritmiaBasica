@@ -62,7 +62,15 @@ public class Main {
 					
 					//Convertimos el árbol en un String
 					String arbol = "";
-					arbol = ToFile.anyadirNodos(arbol,raiz) + "\n";
+					//arbol = ToFile.anyadirNodos(arbol,raiz) + "\n";
+					
+					
+					String test = ToFile.postOrderTraversal(raiz);
+					//Para identificar el final de la representación del árbol de Huffman, se escribe un último 0.
+					test = test + "0";
+					System.out.print(test);
+					
+					
 					
 					//Abrimos el canal de escritura
 		            FileOutputStream fout = new FileOutputStream(ficheroSalida);

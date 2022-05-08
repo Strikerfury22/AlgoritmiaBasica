@@ -68,6 +68,24 @@ public class ToFile {
 		return arbol;
 	}
 	
+	public static String postOrderTraversal(Nodo raiz) {
+		if (raiz != null) {
+			if (raiz.esHoja()) {
+			return postOrderTraversal(raiz.izquierda) +
+			postOrderTraversal(raiz.derecha) +
+			"1" + "-" + raiz.caracter;
+				//System.out.print("1" + "-" + raiz.caracter);
+			} else {
+				return postOrderTraversal(raiz.izquierda) +
+				postOrderTraversal(raiz.derecha) +
+				"0";
+				//System.out.print("0");
+			}
+			//System.out.println(raiz.caracter + "-" + raiz.valor);
+		} else {
+			return "";
+		}
+	}
 	public static void escribirArbol (File fichero, Nodo raiz) {
 		String s = "";
 		s = anyadirNodos(s,raiz) + "\n";
