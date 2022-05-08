@@ -1,0 +1,31 @@
+title cliente-servidor concurrente con pool
+
+participant Cliente1
+participant Cliente2
+participant Servidor
+participant GoRoutine1
+participant GoRoutine2
+
+note over GoRoutine1,GoRoutine2,Servidor
+Inicialización GoRoutines
+end note 
+
+Cliente1->Servidor: Petición 1
+
+Cliente2->Servidor: Petición 2
+
+Servidor->GoRoutine1: Traspasa petición 1 
+
+Servidor->GoRoutine2: Traspasa petición 2 
+
+note over GoRoutine1
+Procesa petición 1
+end note 
+
+note over GoRoutine2
+Procesa petición 2
+end note 
+
+GoRoutine1->Cliente1: Resultado petición 1
+
+GoRoutine2->Cliente2: Resultado petición 2

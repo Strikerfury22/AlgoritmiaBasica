@@ -3,37 +3,22 @@ package compresorHuffman;
 public class TratarCaracter {
 	
 	//Pasando un String con 8 caracteres de 1s y 0s genera su valor Byte
-	public static int convertirBitsAEntero(String bits) {
-		int valor = 0;
-		boolean negativo = false;
-		for(int i = 0; i < 8; i++) {
+	public static char convertirBitsAChar(String bits) {
+		char valor = 0;
+		for(int i = 0; i < 16; i++) {
 			char val = bits.charAt(i);
-			if(!negativo) {
-				if (val=='1') {
-					if (i == 0) {
-						negativo = true;
-						
-					} else {
-						valor += Math.pow(2,(7-i));
-					}
-				}
-			} else {
-				if (val=='0') {
-					valor += Math.pow(2,(7-i));
-				}
+			if (val=='1') {
+				valor += Math.pow(2,(15-i));
 			}
-		}
-		if(negativo) {
-			valor = -(valor+1);
 		}
 		return valor;
 	}
 	
 	//Pasando el valor entero positivo de un carácter, devuelve el array de Strings con los bits que lo codifican
-	public static String convertirEnteroABits(int entero) { //Debe pasar un valor no negativo (usar toUnsignedInt)
+	public static String convertirCharABits(char caracter) { //Debe pasar un valor no negativo (usar toUnsignedInt)
 		String valor = "";
 		String auxiliar = "";
-		int check = entero;
+		int check = (int)caracter;
 		for(int i = 15; i >= 0; i--) { //Los 8 bits
 			auxiliar += String.valueOf(check%2);
 			check/=2;

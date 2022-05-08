@@ -62,7 +62,7 @@ public class Main {
 					
 					//Convertimos el árbol en un String
 					String arbol = "";
-					//arbol = ToFile.anyadirNodos(arbol,raiz) + "\n";
+					arbol = ToFile.anyadirNodos(arbol,raiz);
 					
 					
 					String test = ToFile.postOrderTraversal(raiz);
@@ -90,10 +90,9 @@ public class Main {
 						char c = (char)valor;
 					    String codigo = TratarCaracter.codificarCaracter(c, raiz);
 					    for(int i = 0; i < codigo.length(); i++) { //10
-					    	if(bits.length()==8) {
+					    	if(bits.length()==16) {
 					    		//Escribimos el Byte del buffer en el fichero
-					    		Byte cb = Byte.valueOf(String.valueOf(TratarCaracter.convertirBitsAEntero(bits)));
-					    		fout.write(cb);
+					    		fout.write(String.valueOf(TratarCaracter.convertirBitsAChar(bits)).getBytes());
 					    		//Vacíar el "buffer"
 					    		bits="";
 					    	}
@@ -104,12 +103,12 @@ public class Main {
 		            //Ya se ha leído todo el fichero
 					br.close();
 					if(bits.length()>0) {
-						while(bits.length()<8) {
+						while(bits.length()<16) {
 							bits += "1";
 						}
 						//Escribimos el Byte del buffer en el fichero
-			    		Byte cb = Byte.valueOf(String.valueOf(TratarCaracter.convertirBitsAEntero(bits)));
-			    		fout.write(cb);
+						char input = TratarCaracter.convertirBitsAChar(bits);
+			    		fout.write(String.valueOf(input).getBytes());
 			    		//Vacíar el "buffer"
 			    		bits="";
 					}
@@ -127,7 +126,6 @@ public class Main {
 					FileReader readerDecodificar = new FileReader(args[1]);
 					BufferedReader br = new BufferedReader(readerDecodificar);
 					
-					
 					//Abrimos fichero de salida
 					File ficheroSalida = new File(args[1]+"_decodificado.txt");
 					FileOutputStream fout = new FileOutputStream(ficheroSalida);
@@ -144,8 +142,9 @@ public class Main {
 		            
 		            //Buffer en el que se acumulan 1s y 0s hasta tener 8.
 		            while(valor!=-1) {
-		            	String bits = TratarCaracter.convertirEnteroABits(valor);
-		            	for(int i = 0; i < bits.length(); i++) { //De 0 a 15 //00000110
+		            	char c = (char) valor;
+		            	String bits = TratarCaracter.convertirCharABits(c);
+		            	for(int i = 0; i < bits.length(); i++) { //De 0 a 15 
 					    	if(numDecodificados == totalCaracteres) {
 					    		break;
 					    	}
@@ -163,6 +162,7 @@ public class Main {
 						    	}
 						    	if(iterador.esHoja()) {
 						    		numDecodificados++;
+						    		char t = iterador.caracter;
 						    		fout.write(String.valueOf(iterador.caracter).getBytes());
 						            
 						    		//Reiniciamos el árbol para buscar
