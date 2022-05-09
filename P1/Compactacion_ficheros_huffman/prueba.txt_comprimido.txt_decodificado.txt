@@ -1,1 +1,4 @@
-Mi nomb
+Mi nombre es Marcos.
+El de mi compañero Daniel.
+Esta es una prueba,
+esperemos que vaya bien.

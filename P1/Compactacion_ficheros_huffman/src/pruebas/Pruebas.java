@@ -11,6 +11,7 @@ import compresorHuffman.Extraer_Frecuencias;
 import compresorHuffman.MyInt;
 import compresorHuffman.Nodo;
 import compresorHuffman.ToFile;
+import compresorHuffman.TratarCaracter;
 
 public class Pruebas {
 	
@@ -31,7 +32,7 @@ public class Pruebas {
 		
 		File file = new File("output.txt");
 		String s = "";
-		s = ToFile.anyadirNodos(s,raiz);
+		//s = ToFile.anyadirNodos(s,raiz);
 		try {
             FileOutputStream fout
                     = new FileOutputStream(file);
@@ -47,9 +48,9 @@ public class Pruebas {
 		try {
 			FileReader file = new FileReader("output.txt");
 			BufferedReader br = new BufferedReader(file);
-			Nodo raiz = ToFile.extraerNodos(br, new MyInt(0));
+			//Nodo raiz = ToFile.extraerNodos(br, new MyInt(0));
 			String s = "";
-			s = ToFile.anyadirNodos(s,raiz);
+			//s = ToFile.anyadirNodos(s,raiz);
 			String number = br.readLine();
 			System.out.println(s);
 			System.out.println(number);
@@ -57,6 +58,12 @@ public class Pruebas {
 		} catch (Exception e) {
 			System.out.println("Archivo no encontrado");
 		}
+	}
+	
+	public static void prueba4() {
+		byte b = TratarCaracter.convertirBitsAByte("10010110");
+		System.out.println(b);
+		System.out.println(TratarCaracter.convertirByteABits(b));
 	}
 	
 }

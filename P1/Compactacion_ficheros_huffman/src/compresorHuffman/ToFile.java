@@ -8,7 +8,7 @@ import java.util.Scanner;
 public class ToFile {
 
 
-	public static Nodo extraerNodos(BufferedReader br, MyInt seComeSeparador) {
+	/*public static Nodo extraerNodos(BufferedReader br, MyInt seComeSeparador) {
 		try {
 			int valor = br.read();
 			Nodo n = null;
@@ -48,7 +48,8 @@ public class ToFile {
 			return null;
 		}
 	}
-	
+	*/
+	/*
 	public static String anyadirNodos(String s, Nodo nodo) {
 		String arbol = s;
 		if(nodo.esHoja()) {
@@ -66,7 +67,7 @@ public class ToFile {
 		}
 		return arbol;
 	}
-	
+	*//*
 	public static String postOrderTraversal(Nodo raiz) {
 		if (raiz != null) {
 			if (raiz.esHoja()) {
@@ -84,7 +85,7 @@ public class ToFile {
 		} else {
 			return "";
 		}
-	}
+	}*//*
 	public static void escribirArbol (File fichero, Nodo raiz) {
 		String s = "";
 		s = anyadirNodos(s,raiz) + "\n";
@@ -96,5 +97,5 @@ public class ToFile {
         }catch (Exception e){
             e.printStackTrace();
         }
-	}
+	}*/
 }
