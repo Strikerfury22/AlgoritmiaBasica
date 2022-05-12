@@ -13,7 +13,7 @@ public class TratarCaracter {
 		}
 		return valor;
 	}
-	//byte beta = 0B1000000;
+	
 	//Pasando el valor entero positivo de un carácter, devuelve el array de Strings con los bits que lo codifican
 	public static String convertirByteABits(byte miByte) { //Debe pasar un valor no negativo (usar toUnsignedInt)
 		String valor = "";
