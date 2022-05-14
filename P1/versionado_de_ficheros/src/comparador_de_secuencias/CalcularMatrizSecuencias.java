@@ -39,7 +39,7 @@ public class CalcularMatrizSecuencias {
 				int x = matrizCoste[i-1][j] + 1; //Borrar carácter.
 				int y = matrizCoste[i][j-1] + 1; //Insertar carácter.
 				int z;
-				System.out.println(A[i-1]+" "+B[j-1]);
+				//System.out.println(A[i-1]+" "+B[j-1]); //DEBUG
 				if(A[i-1]==B[j-1]) { z = matrizCoste[i-1][j-1]; } //Sin necesidad de operar.
 				else { z = matrizCoste[i-1][j-1] + 1; } //Reemplazar carácter.
 				matrizCoste[i][j] = min(x,y,z);
@@ -75,7 +75,11 @@ public class CalcularMatrizSecuencias {
 			} else if(i==0) {
 				insts.add(new Instruccion("INS",(byte)(0),B[--j]));			
 			} else {
-				if(matrizOperaciones[i][j]==null) { //Nada
+				if(matrizOperaciones[i][j]==null) { //Nada  
+															/*SALTA ERROR: Index -1 out of bounds for length 257
+															at comparador_de_secuencias.CalcularMatrizSecuencias.resolver(CalcularMatrizSecuencias.java:78)
+															at Main.Main.main(Main.java:201)
+															*/
 					i--;
 					j--;
 				} else {

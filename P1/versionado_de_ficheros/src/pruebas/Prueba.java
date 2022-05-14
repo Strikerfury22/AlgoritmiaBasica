@@ -41,7 +41,7 @@ public class Prueba {
 			System.out.println("Instruccion: "+i.tipoInst());
 			System.out.println("Indice: "+i.indice);
 			System.out.println("Valor: "+i.valor);
-			A = i.ejecutarInstruccion(A);
+			A = i.ejecutarInstruccion(A,A.length);
 		}
 		System.out.println("FIN prueba de resolución de array de Bytes:");
 	}
