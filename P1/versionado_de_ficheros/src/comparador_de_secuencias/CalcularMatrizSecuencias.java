@@ -29,13 +29,13 @@ public class CalcularMatrizSecuencias {
 	 * @param A Secuencia de bytes original
 	 * @param B Secuencia de bytes destino
 	 */
-	public void compSec(byte []A, byte []B) {
-		matrizCoste = new int[A.length+1][B.length+1];;
-		matrizOperaciones = new Instruccion[A.length+1][B.length+1];
-		for(int i = 0; i <= A.length; i++) { matrizCoste[i][0]=i; } //Caso partiendo de la cadena vacía
-		for(int j = 0; j <= A.length; j++) { matrizCoste[0][j]=j; } //Caso objetivo la cadena vacía
-		for(int i = 1; i <= A.length; i++){
-			for(int j = 1; j <= B.length; j++) {
+	public void compSec(byte []A, byte []B, int lenA, int lenB) {
+		matrizCoste = new int[lenA+1][lenB+1];;
+		matrizOperaciones = new Instruccion[lenA+1][lenB+1];
+		for(int i = 0; i <= lenA; i++) { matrizCoste[i][0]=i; } //Caso partiendo de la cadena vacía
+		for(int j = 0; j <= lenB; j++) { matrizCoste[0][j]=j; } //Caso objetivo la cadena vacía
+		for(int i = 1; i <= lenA; i++){
+			for(int j = 1; j <= lenB; j++) {
 				int x = matrizCoste[i-1][j] + 1; //Borrar carácter.
 				int y = matrizCoste[i][j-1] + 1; //Insertar carácter.
 				int z;
@@ -76,10 +76,6 @@ public class CalcularMatrizSecuencias {
 				insts.add(new Instruccion("INS",(byte)(0),B[--j]));			
 			} else {
 				if(matrizOperaciones[i][j]==null) { //Nada  
-															/*SALTA ERROR: Index -1 out of bounds for length 257
-															at comparador_de_secuencias.CalcularMatrizSecuencias.resolver(CalcularMatrizSecuencias.java:78)
-															at Main.Main.main(Main.java:201)
-															*/
 					i--;
 					j--;
 				} else {

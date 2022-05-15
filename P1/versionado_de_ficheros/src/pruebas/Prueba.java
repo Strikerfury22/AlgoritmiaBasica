@@ -35,7 +35,7 @@ public class Prueba {
 		byte []B = {2,1,2,2};
 		CalcularMatrizSecuencias c = new CalcularMatrizSecuencias();
 		
-		c.compSec(A, B);
+		c.compSec(A, B, 4, 4);
 		ArrayList<Instruccion> insts = c.resolver(A.length, B.length, B);
 		for (Instruccion i : insts) {
 			System.out.println("Instruccion: "+i.tipoInst());

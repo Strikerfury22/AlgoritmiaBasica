@@ -1,5 +1,6 @@
 package comparador_de_secuencias;
 
+import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -72,42 +73,55 @@ public class Instruccion {
 		return resultado;
 	}
 
-	public static ArrayList<Instruccion> deSerializar(byte []bytes, int numBytes){
+	public static ArrayList<Instruccion> deSerializar(String fichVersiones){
 		ArrayList<Instruccion> resultado = new ArrayList<Instruccion>();
-		int i = 0; //Indice que recorre el array de bytes.
-		byte indice = 0;
-		byte valor = 0;
-		while(i<numBytes) {
-			switch(tipoInst(bytes[i])) {
-				case "INS":	//000
-					indice = bytes[++i];
-					valor = bytes[++i];
-					i++; //Para que apunte al siguiente byte
-					resultado.add(new Instruccion("INS",indice,valor));
-					break;
-				case "REMP": //001
-					indice = bytes[++i];
-					valor = bytes[++i];
-					i++; //Para que apunte al siguiente byte
-					resultado.add(new Instruccion("REMP",indice,valor));
-					break;
-				case "ELIM": //010
-					indice = bytes[++i];
-					i++; //Para que apunte al siguiente byte
-					resultado.add(new Instruccion("ELIM",indice,(byte)0));
-					break;
-				case "FBLO": //011
-					i++; //Para que apunte al siguiente byte
-					resultado.add(new Instruccion("FBLO",(byte)0,(byte)0));
-					break;
-				case "FVER": //100
-					i++; //Para que apunte al siguiente byte
-					resultado.add(new Instruccion("FBLO",(byte)0,(byte)0));
-					break;
-				default:
-					i++;
-					System.err.println("Instrucción desconocida: IGNORADA");
+		try {
+			FileInputStream inputVersiones = new FileInputStream(fichVersiones);
+			byte []buffer = new byte[1024];
+			int blv = inputVersiones.read(buffer);	
+			int i = 0; //Indice que recorre el array de bytes.
+			while(blv!=-1) {
+				byte indice = 0;
+				byte valor = 0;
+				switch(tipoInst(buffer[i++])) {
+					case "INS":	//000
+						if(i==blv) {blv = inputVersiones.read(buffer); i = 0;} //Si se ha recorrido todo, rellena el buffer
+						indice = buffer[i++];
+						if(i==blv) {blv = inputVersiones.read(buffer); i = 0;}
+						valor = buffer[i++];
+						i++; //Para que apunte al siguiente byte
+						resultado.add(new Instruccion("INS",indice,valor));
+						break;
+					case "REMP": //001
+						if(i==blv) {blv = inputVersiones.read(buffer); i = 0;}
+						indice = buffer[++i];
+						if(i==blv) {blv = inputVersiones.read(buffer); i = 0;}
+						valor = buffer[++i];
+						i++; //Para que apunte al siguiente byte
+						resultado.add(new Instruccion("REMP",indice,valor));
+						break;
+					case "ELIM": //010
+						if(i==blv) {blv = inputVersiones.read(buffer); i = 0;}
+						indice = buffer[++i];
+						i++; //Para que apunte al siguiente byte
+						resultado.add(new Instruccion("ELIM",indice,(byte)0));
+						break;
+					case "FBLO": //011
+						if(i==blv) {blv = inputVersiones.read(buffer); i = 0;}
+						resultado.add(new Instruccion("FBLO",(byte)0,(byte)0));
+						break;
+					case "FVER": //100
+						if(i==blv) {blv = inputVersiones.read(buffer); i = 0;}
+						resultado.add(new Instruccion("FVER",(byte)0,(byte)0));
+						break;
+					default:
+						i++;
+						System.err.println("Instrucción desconocida: IGNORADA");
+				}
 			}
+			inputVersiones.close();
+		}catch(Exception e) {
+			e.printStackTrace();
 		}
 		return resultado;
 	}
@@ -184,18 +198,19 @@ public class Instruccion {
 	}
 	
 	public byte[] ejecutarInstruccion( byte[] A, int tamano) {
-		int longitud = A.length;
+		int longitud = tamano;
 		final Byte[] temp = new Byte[longitud];
 		IntStream.range(0, tamano).forEach(i -> temp[i] = A[i]);
 		List<Byte> tempList = new ArrayList<Byte>(Arrays.asList(temp));
 		
 		if(this.tipoInst()=="ELIM") {
-			tempList.remove(this.indice);
+			int ind = Byte.toUnsignedInt(this.indice);
+			tempList.remove(Byte.toUnsignedInt(this.indice));
 			longitud--;
 		} else if (this.tipoInst()=="REMP") {
 			tempList.set(this.indice, this.valor);
 		} else { //"INS"
-			tempList.add(this.indice, this.valor);
+			tempList.add(this.indice+1, this.valor);
 			longitud++;
 		}
 		
